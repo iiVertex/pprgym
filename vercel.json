@@ -1,6 +1,7 @@
 {
   "version": 2,
   "buildCommand": "vite build",
+  "outputDirectory": "client/dist",
   "functions": {
     "api/index.js": {
       "includeFiles": "client/dist/**"
@@ -8,12 +9,17 @@
   },
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
+      "src": "/api/contact",
+      "dest": "/api/index.js",
+      "methods": ["POST"]
     },
     {
       "src": "/attached_assets/(.*)",
       "dest": "/attached_assets/$1"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2))",
+      "dest": "/client/dist/$1"
     },
     {
       "src": "/(.*)",
