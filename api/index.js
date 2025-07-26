@@ -6,54 +6,35 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, '../dist/public')));
 
-// Contact form endpoint
-app.post('/api/contact', (req, res) => {
-  const { firstName, lastName, email, message } = req.body;
-  
-  if (!firstName || !lastName || !email || !message) {
-    return res.status(400).json({ 
-      message: 'All fields are required' 
-    });
-  }
-  
-  console.log('Contact form submission:', { firstName, lastName, email, message });
-  
-  res.json({ 
-    message: 'Thank you for your message! We will get back to you soon.' 
-  });
+// API routes
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok' });
 });
 
-// Serve static files and handle SPA routing
+// Catch all handler for SPA
 app.get('*', (req, res) => {
-  const url = req.url;
+  const indexPath = path.join(__dirname, '../dist/public/index.html');
   
-  // Handle attached assets
-  if (url.startsWith('/attached_assets/')) {
-    const assetPath = path.join(__dirname, '..', url);
-    if (fs.existsSync(assetPath)) {
-      return res.sendFile(assetPath);
-    }
-    return res.status(404).send('Asset not found');
-  }
-  
-  // Handle static assets from build
-  if (url.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2)$/)) {
-    const staticPath = path.join(__dirname, '../client/dist', url);
-    if (fs.existsSync(staticPath)) {
-      return res.sendFile(staticPath);
-    }
-    return res.status(404).send('File not found');
-  }
-  
-  // Serve index.html for all other routes (SPA)
-  const indexPath = path.join(__dirname, '../client/dist/index.html');
+  // Check if the file exists before trying to send it
   if (fs.existsSync(indexPath)) {
-    return res.sendFile(indexPath);
+    res.sendFile(indexPath);
+  } else {
+    // Fallback HTML if index.html doesn't exist
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>PPR Gym</title>
+        </head>
+        <body>
+          <div id="root">Loading...</div>
+          <script>console.log('Build files not found');</script>
+        </body>
+      </html>
+    `);
   }
-  
-  res.status(404).send('Application not found');
 });
 
 module.exports = app;

@@ -1,12 +1,17 @@
 {
   "version": 2,
-  "buildCommand": "vite build",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/public",
   "functions": {
     "api/index.js": {
-      "includeFiles": "client/dist/**"
+      "maxDuration": 30
     }
   },
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    },
     {
       "src": "/(.*)",
       "dest": "/api/index.js"
