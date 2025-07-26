@@ -1,18 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "npm install && npm run build:server",
   "builds": [
     {
       "src": "server/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "server/**",
-          "shared/**",
-          "attached_assets/**",
-          "dist/public/**"
-        ]
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
