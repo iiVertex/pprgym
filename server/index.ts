@@ -63,9 +63,24 @@ if (process.env.VERCEL) {
   // Register routes synchronously for Vercel
   setupRoutes(app);
   
-  // Serve static files from dist/public
-  const distPath = path.resolve(process.cwd(), "dist/public");
-  if (fs.existsSync(distPath)) {
+  // Try multiple possible paths for the build files
+  const possiblePaths = [
+    path.resolve(process.cwd(), "dist/public"),
+    path.resolve(process.cwd(), "../dist/public"),
+    path.resolve(__dirname, "../dist/public"),
+    path.resolve(__dirname, "../../dist/public")
+  ];
+  
+  let distPath = null;
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      distPath = p;
+      break;
+    }
+  }
+  
+  if (distPath) {
+    console.log(`[Vercel] Serving static files from: ${distPath}`);
     app.use(express.static(distPath));
     
     // SPA fallback
@@ -74,10 +89,23 @@ if (process.env.VERCEL) {
       if (fs.existsSync(indexPath)) {
         res.sendFile(indexPath);
       } else {
-        res.status(404).send('Build files not found');
+        res.status(404).send('React app index.html not found');
       }
     });
   } else {
+    console.log('[Vercel] No build files found, serving fallback page');
+    console.log('[Vercel] Checked paths:', possiblePaths);
+    console.log('[Vercel] Current working directory:', process.cwd());
+    console.log('[Vercel] __dirname:', __dirname);
+    
+    // List files in current directory for debugging
+    try {
+      const files = fs.readdirSync(process.cwd());
+      console.log('[Vercel] Files in cwd:', files);
+    } catch (e) {
+      console.log('[Vercel] Could not list files:', e);
+    }
+    
     // Fallback if no build files
     app.get('*', (req, res) => {
       res.send(`
@@ -108,7 +136,8 @@ if (process.env.VERCEL) {
           </head>
           <body>
             <h1>🏋️ PPR Gym</h1>
-            <p>Website is now deployed and running on Vercel!</p>
+            <p>Website is deployed but React build files not found!</p>
+            <p>Check Vercel build logs for details.</p>
             <div class="api-info">
               <h3>API Endpoints Available:</h3>
               <p>POST /api/contact - Submit contact form</p>
