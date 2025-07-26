@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "buildCommand": "npm install && npm run build:server",
   "builds": [
     {
       "src": "server/index.ts",
@@ -8,7 +9,8 @@
         "includeFiles": [
           "server/**",
           "shared/**",
-          "attached_assets/**"
+          "attached_assets/**",
+          "dist/public/**"
         ]
       }
     }
