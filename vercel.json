@@ -1,15 +1,15 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "server/index.ts",
-      "use": "@vercel/node"
+  "buildCommand": "vite build",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "client/dist/**"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/server/index.ts"
+      "dest": "/api/index.js"
     },
     {
       "src": "/attached_assets/(.*)",
@@ -17,7 +17,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/server/index.ts"
+      "dest": "/api/index.js"
     }
   ]
 }
