@@ -18,11 +18,13 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="flex items-center cursor-pointer" onClick={() => scrollToSection("home")}>
-              <img 
-                src="/attached_assets/image_1753502557193.png" 
-                alt="PPR Gym Logo" 
-                className="w-8 h-8 mr-3"
-              />
+              <div className="w-10 h-10 mr-3 rounded-full bg-white p-1 flex items-center justify-center">
+                <img 
+                  src="/attached_assets/image_1753502846687.png" 
+                  alt="PPR Gym Logo" 
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <div className="text-2xl font-inter font-bold text-electric-blue">
                 PPR GYM
               </div>

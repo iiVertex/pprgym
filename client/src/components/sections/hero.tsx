@@ -20,22 +20,15 @@ export default function Hero() {
       <div className="absolute inset-0 hero-overlay" />
       
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <motion.div
+        <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col items-center mb-6"
+          className="font-inter text-5xl sm:text-6xl lg:text-8xl font-bold leading-tight tracking-tight mb-6"
         >
-          <img 
-            src="/attached_assets/image_1753502557193.png" 
-            alt="PPR Gym Logo" 
-            className="w-24 h-24 mb-4"
-          />
-          <h1 className="font-inter text-5xl sm:text-6xl lg:text-8xl font-bold leading-tight tracking-tight">
-            <span className="text-white">PPR GYM</span><br />
-            <span className="text-electric-blue">PULL. PUSH. RUN.</span>
-          </h1>
-        </motion.div>
+          <span className="text-white">PPR GYM</span><br />
+          <span className="text-electric-blue">PULL. PUSH. RUN.</span>
+        </motion.h1>
         
         <motion.p 
           initial={{ opacity: 0, y: 30 }}
