@@ -1,6 +1,18 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes, setupRoutes } from './routes.js';
-import { setupVite, serveStatic, log } from "./vite.js";
+import path from "path";
+import fs from "fs";
+
+// Simple log function
+function log(message: string) {
+  const formattedTime = new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  });
+  console.log(`${formattedTime} [express] ${message}`);
+}
 
 const app = express();
 app.use(express.json());
@@ -51,56 +63,123 @@ if (process.env.VERCEL) {
   // Register routes synchronously for Vercel
   setupRoutes(app);
   
-  // Simple static serving for Vercel (no build required for now)
-  app.get('*', (req, res) => {
-    res.send(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>PPR Gym</title>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <style>
-            body {
-              font-family: Arial, sans-serif;
-              margin: 0;
-              padding: 40px;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              color: white;
-              text-align: center;
-              min-height: 100vh;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              flex-direction: column;
-            }
-            h1 { font-size: 3em; margin-bottom: 20px; }
-            p { font-size: 1.2em; margin-bottom: 30px; }
-            .api-info { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 30px; }
-          </style>
-        </head>
-        <body>
-          <h1>🏋️ PPR Gym</h1>
-          <p>Website is now deployed and running on Vercel!</p>
-          <div class="api-info">
-            <h3>API Endpoints Available:</h3>
-            <p>POST /api/contact - Submit contact form</p>
-            <p>GET /api/contact - Get contact messages</p>
-          </div>
-        </body>
-      </html>
-    `);
-  });
+  // Serve static files from dist/public
+  const distPath = path.resolve(process.cwd(), "dist/public");
+  if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath));
+    
+    // SPA fallback
+    app.get('*', (req, res) => {
+      const indexPath = path.join(distPath, 'index.html');
+      if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        res.status(404).send('Build files not found');
+      }
+    });
+  } else {
+    // Fallback if no build files
+    app.get('*', (req, res) => {
+      res.send(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>PPR Gym</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 40px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                text-align: center;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+              }
+              h1 { font-size: 3em; margin-bottom: 20px; }
+              p { font-size: 1.2em; margin-bottom: 30px; }
+              .api-info { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 30px; }
+            </style>
+          </head>
+          <body>
+            <h1>🏋️ PPR Gym</h1>
+            <p>Website is now deployed and running on Vercel!</p>
+            <div class="api-info">
+              <h3>API Endpoints Available:</h3>
+              <p>POST /api/contact - Submit contact form</p>
+              <p>GET /api/contact - Get contact messages</p>
+            </div>
+          </body>
+        </html>
+      `);
+    });
+  }
 } else {
   // For local development - run the full server
   (async () => {
     const server = await registerRoutes(app);
 
-    // Setup Vite for development or static serving for production
-    if (process.env.NODE_ENV === "development") {
-      await setupVite(app, server);
+    // Serve static files from dist/public for local development too
+    const distPath = path.resolve(process.cwd(), "dist/public");
+    if (fs.existsSync(distPath)) {
+      app.use(express.static(distPath));
+      
+      // SPA fallback
+      app.get('*', (req, res) => {
+        const indexPath = path.join(distPath, 'index.html');
+        if (fs.existsSync(indexPath)) {
+          res.sendFile(indexPath);
+        } else {
+          res.status(404).send('Build files not found - run npm run build first');
+        }
+      });
     } else {
-      serveStatic(app);
+      app.get('*', (req, res) => {
+        res.send(`
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <title>PPR Gym - Development</title>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                body {
+                  font-family: Arial, sans-serif;
+                  margin: 0;
+                  padding: 40px;
+                  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                  color: white;
+                  text-align: center;
+                  min-height: 100vh;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  flex-direction: column;
+                }
+                h1 { font-size: 3em; margin-bottom: 20px; }
+                p { font-size: 1.2em; margin-bottom: 30px; }
+                .build-info { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 30px; }
+              </style>
+            </head>
+            <body>
+              <h1>🏋️ PPR Gym</h1>
+              <p>Development server running!</p>
+              <div class="build-info">
+                <h3>To see your React app:</h3>
+                <p>Run <code>npm run build</code> first</p>
+                <h3>API Endpoints Available:</h3>
+                <p>POST /api/contact - Submit contact form</p>
+                <p>GET /api/contact - Get contact messages</p>
+              </div>
+            </body>
+          </html>
+        `);
+      });
     }
 
     const port = parseInt(process.env.PORT || '5000', 10);
