@@ -1,8 +1,12 @@
 {
+  "version": 2,
   "builds": [
     {
       "src": "server/index.ts",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["client/dist/**", "attached_assets/**"]
+      }
     }
   ],
   "routes": [
@@ -11,8 +15,17 @@
       "dest": "/server/index.ts"
     },
     {
+      "src": "/attached_assets/(.*)",
+      "dest": "/attached_assets/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/client/dist/$1"
+      "dest": "/server/index.ts"
     }
-  ]
+  ],
+  "functions": {
+    "server/index.ts": {
+      "includeFiles": "client/dist/**"
+    }
+  }
 }
