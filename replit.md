@@ -2,11 +2,13 @@
 
 ## Overview
 
-This is a full-stack web application for PPR Gym (Power. Performance. Results.) - a fitness gym website with a modern, dark-themed design. The application features a landing page with sections for hero, about, coaches, testimonials, and a contact form. It's built using a modern tech stack with TypeScript, React, and Express.js.
+This is a full-stack web application for PPR Gym (Pull. Push. Run.) - a fitness gym website with a modern, dark-themed design located at Al Rayyan Plaza, 2nd floor. The application features a landing page with sections for hero, about, real coaches, testimonials, and a contact form. It's built using a modern tech stack with TypeScript, React, and Express.js with clean, minimalistic Inter font for headings.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Font preference: Minimalistic Inter font for headings instead of decorative fonts
+Real coach integration: Uses actual coach photos and information from PPR Gym
 
 ## System Architecture
 
@@ -51,12 +53,12 @@ Preferred communication style: Simple, everyday language.
 - **404 Page**: Simple not found page with helpful messaging
 
 ### UI Sections
-- **Navigation**: Fixed header with smooth scroll navigation
-- **Hero**: Full-screen banner with call-to-action
-- **About**: Information about the gym's philosophy
-- **Coaches**: Team member profiles with images
-- **Testimonials**: Customer reviews with star ratings
-- **Footer/Contact**: Contact form with social media links
+- **Navigation**: Fixed header with PPR logo and smooth scroll navigation
+- **Hero**: Full-screen banner with PPR logo, "Pull Push Run" branding, and motivational tagline
+- **About**: Information about PPR's training philosophy and Al Rayyan Plaza location
+- **Coaches**: Real coach profiles (Francois, Ahmed Dimassi, Mohamed, Ahmed Alazab) with actual photos
+- **Testimonials**: Customer reviews reflecting PPR's approach and Qatar location
+- **Footer/Contact**: Contact form with actual gym hours (Sat-Thu 5am-12am, Fri 4pm-9pm) and valet parking info
 
 ## Data Flow
 

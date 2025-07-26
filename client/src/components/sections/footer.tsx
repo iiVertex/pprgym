@@ -96,7 +96,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <motion.h3 
               variants={itemVariants}
-              className="font-bebas text-3xl font-bold text-electric-blue mb-6"
+              className="font-inter text-3xl font-bold text-electric-blue mb-6"
             >
               GET IN TOUCH
             </motion.h3>
@@ -158,15 +158,15 @@ export default function Footer() {
           {/* Contact Info & Social */}
           <div className="space-y-8">
             <motion.div variants={itemVariants}>
-              <h4 className="font-bebas text-2xl font-bold text-white mb-4">CONTACT INFO</h4>
+              <h4 className="font-inter text-2xl font-bold text-white mb-4">CONTACT INFO</h4>
               <div className="space-y-3 text-gray-300">
                 <p className="flex items-center">
                   <MapPin className="text-electric-blue mr-3 h-5 w-5" />
-                  123 Fitness Street, Gym City, GC 12345
+                  📍Al Rayyan Plaza, 2nd floor
                 </p>
                 <p className="flex items-center">
                   <Phone className="text-electric-blue mr-3 h-5 w-5" />
-                  (555) 123-4567
+                  77036697
                 </p>
                 <p className="flex items-center">
                   <Mail className="text-electric-blue mr-3 h-5 w-5" />
@@ -176,7 +176,7 @@ export default function Footer() {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <h4 className="font-bebas text-2xl font-bold text-white mb-4">FOLLOW US</h4>
+              <h4 className="font-inter text-2xl font-bold text-white mb-4">FOLLOW US</h4>
               <div className="flex space-x-4">
                 <a href="#" className="text-gray-400 hover:text-electric-blue transition-colors text-2xl">
                   <Facebook className="h-6 w-6" />
@@ -194,11 +194,11 @@ export default function Footer() {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <h4 className="font-bebas text-2xl font-bold text-white mb-4">GYM HOURS</h4>
+              <h4 className="font-inter text-2xl font-bold text-white mb-4">GYM HOURS</h4>
               <div className="space-y-2 text-gray-300">
-                <p>Monday - Friday: 5:00 AM - 11:00 PM</p>
-                <p>Saturday: 6:00 AM - 10:00 PM</p>
-                <p>Sunday: 7:00 AM - 9:00 PM</p>
+                <p>Saturday - Thursday: 5:00 AM - 12:00 AM</p>
+                <p>Friday: 4:00 PM - 9:00 PM</p>
+                <p className="text-electric-blue font-semibold">VALET PARKING AVAILABLE</p>
               </div>
             </motion.div>
           </div>

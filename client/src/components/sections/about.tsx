@@ -34,7 +34,7 @@ export default function About() {
         >
           <motion.h2 
             variants={itemVariants}
-            className="font-bebas text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-electric-blue"
+            className="font-inter text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-electric-blue"
           >
             UNLEASH YOUR POTENTIAL
           </motion.h2>
@@ -44,14 +44,14 @@ export default function About() {
               variants={itemVariants}
               className="text-lg sm:text-xl text-gray-300 leading-relaxed mb-8 font-montserrat"
             >
-              At PPR Gym, we believe that true transformation comes from the perfect combination of power, performance, and results. Our elite coaching staff brings decades of experience in strength training, conditioning, and athletic performance to help you achieve goals you never thought possible.
+              At PPR Gym, we believe in the power of Pull, Push, Run. Our comprehensive training approach combines strength, conditioning, and cardio to deliver real results. Progress takes place outside of your comfort zone, and our expert coaches are here to guide you through every step of your transformation journey.
             </motion.p>
             
             <motion.p 
               variants={itemVariants}
               className="text-lg sm:text-xl text-gray-300 leading-relaxed font-montserrat"
             >
-              We're not just a gym – we're a community of dedicated athletes, trainers, and fitness enthusiasts who push each other to be better every single day. Join us and discover what your body and mind are truly capable of achieving.
+              Located at Al Rayyan Plaza, 2nd floor, we offer personalized training, HIIT classes, and comprehensive fitness programs. With valet parking and extended hours, we make it convenient for you to prioritize your health and fitness goals.
             </motion.p>
           </div>
         </motion.div>

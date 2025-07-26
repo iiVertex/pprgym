@@ -17,8 +17,15 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <div className="text-2xl font-bebas text-electric-blue cursor-pointer" onClick={() => scrollToSection("home")}>
-              PPR GYM
+            <div className="flex items-center cursor-pointer" onClick={() => scrollToSection("home")}>
+              <img 
+                src="/attached_assets/image_1753502557193.png" 
+                alt="PPR Gym Logo" 
+                className="w-8 h-8 mr-3"
+              />
+              <div className="text-2xl font-inter font-bold text-electric-blue">
+                PPR GYM
+              </div>
             </div>
           </div>
           

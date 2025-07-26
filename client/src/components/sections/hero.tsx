@@ -20,24 +20,40 @@ export default function Hero() {
       <div className="absolute inset-0 hero-overlay" />
       
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <motion.h1 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="font-bebas text-5xl sm:text-6xl lg:text-8xl font-bold mb-6 leading-tight tracking-wide"
+          className="flex flex-col items-center mb-6"
         >
-          <span className="text-white">PPR GYM</span><br />
-          <span className="text-electric-blue">POWER. PERFORMANCE. RESULTS.</span>
-        </motion.h1>
+          <img 
+            src="/attached_assets/image_1753502557193.png" 
+            alt="PPR Gym Logo" 
+            className="w-24 h-24 mb-4"
+          />
+          <h1 className="font-inter text-5xl sm:text-6xl lg:text-8xl font-bold leading-tight tracking-tight">
+            <span className="text-white">PPR GYM</span><br />
+            <span className="text-electric-blue">PULL. PUSH. RUN.</span>
+          </h1>
+        </motion.div>
         
         <motion.p 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-xl sm:text-2xl lg:text-3xl font-montserrat font-semibold mb-8 text-gray-200"
+          className="text-xl sm:text-2xl lg:text-3xl font-montserrat font-semibold mb-4 text-gray-200"
         >
-          Transform your body and mind with elite coaching.
+          Progress takes place outside of your comfort zone
         </motion.p>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-lg sm:text-xl font-montserrat font-bold mb-8 text-electric-blue"
+        >
+          𝗚𝗬𝗠 | 𝗣𝗧 | 𝗛𝗜𝗜𝗧 | VALET PARKING
+        </motion.div>
         
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -5,22 +5,22 @@ import { Star } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Jessica M.",
+    name: "Layla K.",
     memberSince: "Member since 2023",
     rating: 5,
-    text: "PPR Gym completely transformed my life. I went from barely being able to do a push-up to deadlifting 300lbs in just 8 months. The coaches here are incredible!"
+    text: "PPR Gym's Pull Push Run approach completely changed my fitness journey. The coaches pushed me outside my comfort zone and I achieved results I never thought possible!"
   },
   {
-    name: "Michael R.",
-    memberSince: "Member since 2022",
+    name: "Omar A.",
+    memberSince: "Member since 2022", 
     rating: 5,
-    text: "The community here is unmatched. Everyone pushes each other to be better. I've never felt stronger or more confident in my life."
+    text: "The HIIT classes at PPR are intense but incredibly effective. Coach Ahmed's energy is contagious and the valet parking makes it so convenient to never miss a session."
   },
   {
-    name: "Amanda K.",
-    memberSince: "Member since 2021",
+    name: "Sara M.",
+    memberSince: "Member since 2024",
     rating: 5,
-    text: "From day one, the trainers at PPR believed in me more than I believed in myself. Their expertise and motivation made all the difference."
+    text: "Located perfectly at Al Rayyan Plaza, PPR Gym has the best trainers in Qatar. Coach Francois helped me build strength I never knew I had. Progress truly happens outside your comfort zone!"
   }
 ];
 
@@ -61,7 +61,7 @@ export default function Testimonials() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="font-bebas text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-white">
+          <h2 className="font-inter text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-white">
             SUCCESS <span className="text-electric-blue">STORIES</span>
           </h2>
           <p className="text-xl text-gray-300 font-montserrat">
