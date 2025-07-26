@@ -4,35 +4,40 @@ const fs = require('fs');
 
 const app = express();
 
-// Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../dist/public')));
+
+// Serve static files from the correct build directory
+const staticPath = path.join(process.cwd(), 'dist', 'public');
+console.log('Static path:', staticPath);
+console.log('Static path exists:', fs.existsSync(staticPath));
+
+if (fs.existsSync(staticPath)) {
+  app.use(express.static(staticPath));
+}
 
 // API routes
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok' });
+  res.json({ 
+    status: 'ok',
+    cwd: process.cwd(),
+    staticPath: staticPath,
+    exists: fs.existsSync(staticPath),
+    nodeVersion: process.version
+  });
 });
 
-// Catch all handler for SPA
+// SPA fallback
 app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, '../dist/public/index.html');
+  const indexPath = path.join(staticPath, 'index.html');
   
-  // Check if the file exists before trying to send it
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);
   } else {
-    // Fallback HTML if index.html doesn't exist
-    res.send(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>PPR Gym</title>
-        </head>
-        <body>
-          <div id="root">Loading...</div>
-          <script>console.log('Build files not found');</script>
-        </body>
-      </html>
+    res.status(500).send(`
+      <h1>App Error</h1>
+      <p>Index file not found at: ${indexPath}</p>
+      <p>Working directory: ${process.cwd()}</p>
+      <p>Node version: ${process.version}</p>
     `);
   }
 });
