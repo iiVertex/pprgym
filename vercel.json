@@ -1,29 +1,19 @@
 {
   "version": 2,
-  "buildCommand": "vite build",
-  "outputDirectory": "client/dist",
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "client/dist/**"
+  "buildCommand": "npm run build",
+  "builds": [
+    {
+      "src": "server/index.ts",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["dist/**", "client/**", "shared/**", "attached_assets/**"]
+      }
     }
-  },
+  ],
   "routes": [
     {
-      "src": "/api/contact",
-      "dest": "/api/index.js",
-      "methods": ["POST"]
-    },
-    {
-      "src": "/attached_assets/(.*)",
-      "dest": "/attached_assets/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2))",
-      "dest": "/client/dist/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/api/index.js"
+      "dest": "/server/index.ts"
     }
   ]
 }
