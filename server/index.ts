@@ -50,7 +50,47 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 if (process.env.VERCEL) {
   // Register routes synchronously for Vercel
   setupRoutes(app);
-  serveStatic(app);
+  
+  // Simple static serving for Vercel (no build required for now)
+  app.get('*', (req, res) => {
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>PPR Gym</title>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              margin: 0;
+              padding: 40px;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+              text-align: center;
+              min-height: 100vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-direction: column;
+            }
+            h1 { font-size: 3em; margin-bottom: 20px; }
+            p { font-size: 1.2em; margin-bottom: 30px; }
+            .api-info { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 30px; }
+          </style>
+        </head>
+        <body>
+          <h1>🏋️ PPR Gym</h1>
+          <p>Website is now deployed and running on Vercel!</p>
+          <div class="api-info">
+            <h3>API Endpoints Available:</h3>
+            <p>POST /api/contact - Submit contact form</p>
+            <p>GET /api/contact - Get contact messages</p>
+          </div>
+        </body>
+      </html>
+    `);
+  });
 } else {
   // For local development - run the full server
   (async () => {
