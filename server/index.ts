@@ -70,3 +70,9 @@ app.use((req, res, next) => {
     log(`serving on port ${port}`);
   });
 })();
+
+// Export for Vercel
+export default app;
+
+// Also support CommonJS for local development
+module.exports = app;
