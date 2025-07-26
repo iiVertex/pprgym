@@ -1,5 +1,5 @@
 import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes";
+import { registerRoutes, setupRoutes } from './routes';
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
@@ -39,40 +39,38 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
-  const server = await registerRoutes(app);
+// Error handler
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+  const status = err.status || err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  res.status(status).json({ message });
+});
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+// For Vercel deployment - export the app directly
+if (process.env.VERCEL) {
+  // Register routes synchronously for Vercel
+  setupRoutes(app);
+  serveStatic(app);
+} else {
+  // For local development - run the full server
+  (async () => {
+    const server = await registerRoutes(app);
 
-    res.status(status).json({ message });
-    throw err;
-  });
+    // Setup Vite for development or static serving for production
+    if (process.env.NODE_ENV === "development") {
+      await setupVite(app, server);
+    } else {
+      serveStatic(app);
+    }
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (process.env.NODE_ENV === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
+    const port = parseInt(process.env.PORT || '5000', 10);
+    const host = process.platform === 'win32' ? 'localhost' : '0.0.0.0';
+    
+    server.listen(port, host, () => {
+      log(`serving on port ${port}`);
+    });
+  })();
+}
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 5000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || '5000', 10);
-  const host = process.platform === 'win32' ? 'localhost' : '0.0.0.0';
-  
-  server.listen(port, host, () => {
-    log(`serving on port ${port}`);
-  });
-})();
-
-// Export for Vercel
+// Export for Vercel and CommonJS
 export default app;
-
-// Also support CommonJS for local development
-module.exports = app;
