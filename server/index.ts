@@ -2,6 +2,11 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes, setupRoutes } from './routes.js';
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from 'url';
+
+// ES module equivalent of __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Simple log function
 function log(message: string) {
